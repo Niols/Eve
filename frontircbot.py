@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 ################################################################################
 #                                                                              #
 #                                  FrontIRCBot                                 #
@@ -8,7 +10,10 @@
 
 import irc.client, irc.schedule
 import threading
-import queue
+import sys
+
+if sys.version[0] == '2': import Queue as queue
+else: import queue
 
 DEFAULT_PORT = 6667
 "Default port for IRC servers."
