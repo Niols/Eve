@@ -1,0 +1,13 @@
+
+
+# Emacs
+
+*~
+*#
+
+
+
+# Python
+
+*.pyc
+__pycache__
