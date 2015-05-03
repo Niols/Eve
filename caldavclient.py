@@ -1,10 +1,19 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+################################################################################
+#                                                                              #
+#                                  FrontIRCBot                                 #
+#                                                                              #
+#  Niols wrote this file.                                                      #
+#                                                                              #
+################################################################################
 
 from __future__ import unicode_literals
 import caldav
 from datetime import datetime, timedelta
-from urllib.parse import urlparse
+
+if sys.version[0] == '2': from urlparse import urlparse
+else: from urllib.parse import urlparse
 
 VDATE_FMT = '%Y%m%d'
 "Date format in VEVENTs."

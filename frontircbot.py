@@ -8,6 +8,8 @@
 #                                                                              #
 ################################################################################
 
+from __future__ import unicode_literals
+
 import irc.client, irc.schedule
 import threading
 import sys
