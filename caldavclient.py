@@ -11,6 +11,7 @@
 from __future__ import unicode_literals
 import caldav
 from datetime import datetime, timedelta
+import sys
 
 if sys.version[0] == '2': from urlparse import urlparse
 else: from urllib.parse import urlparse
