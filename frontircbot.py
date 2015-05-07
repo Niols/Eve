@@ -100,7 +100,6 @@ class FrontIRCBot:
 
     _message_queues = {}
     # server:port → target → Queue
-    # Messages are put in the queue, and poped each second to avoid server's flood.
 
     def __init__(self, nickname = DEFAULT_NICKNAME):
         self.nickname = nickname
@@ -118,4 +117,5 @@ class FrontIRCBot:
         if not target in self._message_queues[server]:
             self._message_queues[server][target] = queue.Queue()
 
-        self._message_queues[server][target].put(message)
+        for line in message.split('\n'):
+            self._message_queues[server][target].put(line)
