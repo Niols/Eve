@@ -1,0 +1,37 @@
+{
+    "lang": "en", 
+    "bindings": [
+        {
+            "irc": {
+                "target": "#foo", 
+                "server": "foobar.stuff"
+            }, 
+            "caldavs": [
+                {
+                    "url": "https://dav.example.com/cal/calendars/some-one/default", 
+                    "username": "some-one", 
+                    "password": "the password"
+                }, 
+                {
+                    "url": "https://caldav.example2.com/some-one/not-default", 
+                    "username": "some-one", 
+                    "password": "the password"
+                }
+            ]
+        }, 
+        {
+            "irc": {
+                "target": "me", 
+                "server": "irc.dududududu.molly:7542"
+            }, 
+            "caldavs": [
+                {
+                    "url": "https://somewhere.over/the/rainbow", 
+                    "username": "molly", 
+                    "password": "dududududu"
+                }
+            ]
+        }
+    ], 
+    "nickname": "Eve"
+}
