@@ -119,3 +119,33 @@ class FrontIRCBot:
 
         for line in message.split('\n'):
             self._message_queues[server][target].put(line)
+
+
+
+class Color:
+    White      =  '0'
+    Black      =  '1'
+    DarkBlue   =  '2'
+    DarkGreen  =  '3'
+    Red        =  '4'
+    Brown      =  '5'
+    Purple     =  '6'
+    Orange     =  '7'
+    Yellow     =  '8'
+    LightGreen =  '9'
+    Cyan       = '10'
+    LightCyan  = '11'
+    Blue       = '12'
+    Pink       = '13'
+    Gray       = '14'
+    LightGray  = '15'
+
+class Control:
+    Bold          = '%c' %  2  # \0x02
+    Color         = '%c' %  3  # \0x03
+    Italic        = '%c' %  9  # \0x09
+    StrikeThrough = '%c' % 19  # \0x13
+    Reset         = '%c' % 15  # \0x0f
+    Underline     = '%c' % 21  # \0x15
+    Underline2    = '%c' % 31  # \0x1f
+    Reverse       = '%c' % 22  # \0x16
