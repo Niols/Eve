@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-from frontircbot import FrontIRCBot
+from frontircbot import FrontIRCBot, Control, Color
 import caldavclient
 import sched
 import time as mod_time
@@ -19,29 +19,42 @@ if len(sys.argv) != 2:
 config = json.load(open(sys.argv[1], 'r'))
 bindings = config['bindings']
 
+for binding in bindings:
+    for caldav in binding['caldavs']:
+        caldav['calendar'] = caldavclient.get_calendar(caldav['url'], caldav['username'], caldav['password'])
 
-Eve = FrontIRCBot(bindings['nickname'])
+
+Eve = FrontIRCBot(config['nickname'])
 
 
 def print_tomorrows_events():
     tomorrow = date.today()+timedelta(1)
 
     for binding in bindings:
-        calendar = caldavclient.get_calendar(binding['caldav']['url'], binding['caldav']['username'], binding['caldav']['password'])
-        events = calendar.date_search(tomorrow, tomorrow+timedelta(1))
-        if not events:
+        events = []
+        for caldav in binding['caldavs']:
+            events += caldav['calendar'].date_search(tomorrow, tomorrow+timedelta(1))
+        vevents = [event.instance.vevent for event in events]
+        vevents.sort(key = lambda vevent: vevent.dtstart.valueRepr())
+
+        print(vevents)
+
+        if not vevents:
             message = 'No events planned for tomorrow (%s).' % str(tomorrow)
         else:
-            message = 'Events for tomorrow (%s):' % str(tomorrow)
-            for event in events:
-                vevent = event.instance.vevent
-                message += '\n  %s (%s)' % ( vevent.summary.value ,
-                                             vevent.dtstart.value )
+            message = Control.Color + Color.Red + 'Events for tomorrow (%s):' % str(tomorrow)
+            for vevent in vevents:
+                if hasattr(vevent.dtstart.value, 'hour') and hasattr(vevent.dtstart.value, 'minute'):
+                    message += '\n' + Control.Color + Color.Gray
+                    message += '{:>2}:{:0>2}'.format( vevent.dtstart.value.hour,
+                                                      vevent.dtstart.value.minute )
+                    message += Control.Reset + '  ' + vevent.summary.value
+                else:
+                    message += '\n       ' + vevent.summary.value
         Eve.privmsg(binding['irc']['server'], binding['irc']['target'], message)
 
 
 def repeat_everyday(func, args=()):
-    print('repeat_everyday')
     scheduler.enter(86400, 1, repeat_everyday, (func,args))
     func(*args)
 
